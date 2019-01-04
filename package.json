@@ -6,14 +6,14 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AminZibayi/react-multi-language.git"
+    "url": "git+https://github.com/AminZibayi/react-extensible.git"
   },
   "author": "Amin Zibayi",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/AminZibayi/react-multi-language/issues"
+    "url": "https://github.com/AminZibayi/react-extensible/issues"
   },
-  "homepage": "https://github.com/AminZibayi/react-multi-language#readme",
+  "homepage": "https://github.com/AminZibayi/react-extensible#readme",
   "keywords": [
     "react",
     "extensible",
