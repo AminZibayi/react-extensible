@@ -28,13 +28,3 @@ ErrorBoundary.propTypes = {
 };
 
 export default ErrorBoundary;
-
-// [
-//   {
-//     name: String.isRequired,
-//     disable: Boolean, // default false
-//     render: Component,
-//     props: Object, // default {}
-//     suspense: Component,
-//   }
-// ]

@@ -13,5 +13,11 @@
   "bugs": {
     "url": "https://github.com/AminZibayi/react-multi-language/issues"
   },
-  "homepage": "https://github.com/AminZibayi/react-multi-language#readme"
+  "homepage": "https://github.com/AminZibayi/react-multi-language#readme",
+  "keywords": [
+    "react",
+    "extensible",
+    "extension",
+    "plugin"
+  ]
 }
