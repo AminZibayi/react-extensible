@@ -47,9 +47,9 @@ export default App;
 ```
 
 **Result:**
-You will observe three "Hello" messages on the screen. after 3 seconds, the two last ones will get disapeared because of `Action.disable("beta")`.
+You will observe three "Hello" messages on the screen. after 3 seconds, the two last ones will get disappeared because of `Action.disable("beta")`.
 
-react-extensible has much more capabilites; See API Reference.
+react-extensible has much more capabilities; See API Reference.
 
 ## API Reference
 
@@ -71,7 +71,7 @@ A static class; It has five methods:
   disable: Boolean, // default false, if true, the extension will get unmounted
   render: Component/Function, // the extension will render this Component if none of props.render and props.children of the extension component whose props.name is equal to the name property of this object. also, it can be a loader function that will be passed to React.lazy.
   props: Object, // default {}, these props will be passed to the component that the extension component renders.
-  suspense: Component, // if the value of render property is a loader function, this component will get rendered till the main component is loaded, in fact this will be passed to React.Suspense.
+  suspense: Component, // if the value of render property is a loader function, this component will get rendered till the main component is loaded, in fact, this will be passed to React.Suspense.
 }
 ```
 2. `unregister(extnName)`: unregisters an extension in other hand remove an extnInfo object.
@@ -85,7 +85,7 @@ A react component; It represents an extension. `props`:
 
 1. `name`: is required, it links an extension to a registered extnInfo object.
 2. `route`: if you are using react-router and want to pass the extension to a Route component, pass the Route component of react-router to the extension so the extension will pass its inside component as render property to a Route component; its path is the extension name.
-3. `fallback`: a component which will get rendered when the ErrorBoundary catchs an error in its child component tree (the component that the extension renders); This fallback component receive a props named `error` which contain the occurred error.
+3. `fallback`: a component which will get rendered when the ErrorBoundary catches an error in its child component tree (the component that the extension renders); This fallback component receives a prop named `error` which contain the occurred error.
 4. `props`: an object, these props will be passed to the component that the extension renders.
 5. `render`: a react component, the extension will render this component.
 6. `children`: you can also pass the component that you want the extension to render via children.
