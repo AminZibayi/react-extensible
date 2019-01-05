@@ -47,6 +47,14 @@ class Provider extends React.Component {
         })
       }))
     });
+
+    document.addEventListener("extensible:init", e => {
+      this.setState({ data: e.detail });
+    });
+  }
+
+  componentDidMount() {
+    document.dispatchEvent(new CustomEvent("extensible:mounted"));
   }
 
   render() {

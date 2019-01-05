@@ -2,6 +2,10 @@
 
 const store = [];
 
+document.addEventListener("extensible:mounted", e => {
+  document.dispatchEvent(new CustomEvent("extensible:init", {detail: store}));
+});
+
 class Actions {
   static register(extnInfo) {
     extnInfo.disable || (extnInfo.disable = false);
@@ -44,6 +48,6 @@ class Actions {
       if (store[key].name === extnName) 
         return store[key]
   }
-}
+};
 
 export default Actions;

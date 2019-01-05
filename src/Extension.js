@@ -46,7 +46,10 @@ Extension.propTypes = {
   route: PropTypes.object,
   fallback: PropTypes.element, // fallback is rendered when an error happens it also receive the error
   props: PropTypes.object,
-  render: PropTypes.element,
+  render: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func,
+  ]),
   children: PropTypes.element
 };
 
