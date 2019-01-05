@@ -19,35 +19,29 @@ A library which helps you create extensible react applications.
 react-extensible exports:
 1. `Extension`: it is a react component that represents an extension or plugin. It receives a prop called `name`; You can have several `Extension`s with the same name. another prop is `render`, its value is a react component.
 2. `Actions`: is a static class. You can register or unrgister an extension using `Actions.register(extnInfo)` and `Actions.unregister(extnName)`, `extnInfo` is an object and at least must have a `name` field.
-3. `Provider`: All the `Extension`s have to be descendants of a Provider component; Having only one Provider in your app is highly recommended. Note that you only can register extensions after the Provider is rendered.
+3. `Provider`: All the `Extension`s have to be descendants of a Provider component; Having only one Provider in your app is highly recommended.
 
 ```javascript
-import React, { Component } from 'react';
+import React from 'react';
 import {Extension, Provider, Actions} from './react-extensible';
 
-class App extends Component {
-  componentDidMount() {
-    Actions.register({
-      name: "alpha"
-    });
-    Actions.register({
-      name: "beta"
-    });
-    setTimeout(() => Actions.disable("beta"), 3000)
-  }
+const App = props => (
+  <Provider>
+    <div className="App">
+      <Extension name="alpha" render={() => <div>Hello</div>}/>
+      <Extension name="beta" render={() => <div>Hello</div>}/>
+      <Extension name="beta" render={() => <div>Hello</div>}/>
+    </div>
+  </Provider>
+);
 
-  render() {
-    return (
-      <Provider>
-        <div className="App">
-          <Extension name="alpha" render={() => <div>Hello</div>}/>
-          <Extension name="beta" render={() => <div>Hello</div>}/>
-          <Extension name="beta" render={() => <div>Hello</div>}/>
-        </div>
-      </Provider>
-    );
-  }
-}
+Actions.register({
+  name: "alpha"
+});
+Actions.register({
+  name: "beta"
+});
+setTimeout(() => Actions.disable("beta"), 3000)
 
 export default App;
 ```
@@ -63,8 +57,6 @@ react-extensible has much more capabilites; See API Reference.
 
 A react component; It has no props.
 All the `Extension`s have to be descendants of a Provider component; Having only one Provider in your app is highly recommended.
-
-**Note:** that you only can register extensions after the Provider is rendered.
 
 ### Actions
 
