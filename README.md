@@ -23,7 +23,7 @@ react-extensible exports:
 
 ```javascript
 import React from 'react';
-import {Extension, Provider, Actions} from './react-extensible';
+import {Extension, Provider, Actions} from 'react-extensible';
 
 const App = props => (
   <Provider>
@@ -62,9 +62,9 @@ All the `Extension`s have to be descendants of a Provider component; Having only
 
 A static class; It has five methods:
 
-1. `register(etxnInfo: Object)`: registers an extension so can use the registered extension information to display extension in your app, you can even display an extension at several places in your app.
+1. `register(extnInfo: Object)`: registers an extension so can use the registered extension information to display extension in your app, you can even display an extension at several places in your app.
 
-`extenInfo`:
+`extnInfo`:
 ```javascript
 {
   name: String, // required, the name of the extension
@@ -91,6 +91,53 @@ A react component; It represents an extension. `props`:
 6. `children`: you can also pass the component that you want the extension to render via children.
 
 **Note:** props of Extension component override the relevant extnInfo object.
+
+### Extensions
+
+A react component; It will call a function for each registered extnInfo object once it is rendered and anytime a change happens in the store (the extnInfo objects).
+
+The function is received through `children`. In fact, it will be passed to a map function so it receives each extnInfo object as the first argument. It can return nothing or an `Extension`: (the following example also uses lazy loading)
+
+```javascript
+// Beta.js
+import React from 'react';
+
+export default props => <div>I'll go soon...:(</div>;
+
+//App.js
+import React from 'react';
+import {Extension, Extensions, Provider, Actions} from 'react-extensible';
+
+const App = props => (
+  <Provider>
+    <div className="App">
+      <Extensions>
+        {extnInfo => <Extension name={extnInfo.name} render={extnInfo.name === "alpha" && (() => <div>Hello, I'm alpha</div>)}/>}
+      </Extensions>
+      <Extensions>
+        {extnInfo => {
+          if(extnInfo.name === "alpha")
+            return <Extension name="alpha"/>
+          }}
+      </Extensions>
+    </div>
+  </Provider>
+);
+
+Actions.register({
+  name: "alpha",
+  render: () => <div>Hi, I am Alpha</div>
+});
+
+Actions.register({
+  name: "beta",
+  render: () => import("./Beta")
+});
+
+setTimeout(() => Actions.disable("beta"), 3000);
+
+export default App;
+```
 
 Is something missing?! feel free to open an issue!
 
