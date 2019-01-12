@@ -4,8 +4,11 @@ import Context from "./Context";
 import React from "react";
 
 class Provider extends React.Component {
-  state = {
-    data: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
   }
 
   componentWillMount() {

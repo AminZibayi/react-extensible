@@ -4,7 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class ErrorBoundary extends React.Component {
-  state = { error: false };
+  constructor(props){
+    super(props);
+    this.state = { error: false };
+  }
 
   static getDerivedStateFromError(error) {
     return { error };
