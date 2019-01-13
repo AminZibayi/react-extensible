@@ -15,8 +15,8 @@
   },
   "homepage": "https://github.com/AminZibayi/react-extensible#readme",
   "dependencies": {
-    "react": "^16.7.0",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0"
   },
   "keywords": [
     "react",

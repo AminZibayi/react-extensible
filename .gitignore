@@ -1,3 +1,6 @@
 # In the Name of Allah
 
 /_
+/.cache
+/node_modules
+/dist
