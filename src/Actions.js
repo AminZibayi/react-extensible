@@ -1,6 +1,6 @@
 /* In the Name of Allah */
 
-const store = [];
+let store = [];
 
 document.addEventListener("extensible:mounted", e => {
   document.dispatchEvent(new CustomEvent("extensible:init", {detail: store}));

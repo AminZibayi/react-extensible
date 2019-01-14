@@ -14,7 +14,7 @@
     "url": "https://github.com/AminZibayi/react-extensible/issues"
   },
   "homepage": "https://github.com/AminZibayi/react-extensible#readme",
-  "dependencies": {
+  "peerDependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.7.0"
   },
@@ -23,5 +23,14 @@
     "extensible",
     "extension",
     "plugin"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-transform-classes": "^7.2.2",
+    "babel-preset-env": "^2.0.0-alpha.20",
+    "babel-preset-minify": "^0.5.0",
+    "babel-preset-react": "^7.0.0-alpha.20",
+    "rollup-plugin-babel": "^4.3.0"
+  }
 }
