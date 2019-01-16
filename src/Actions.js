@@ -44,6 +44,8 @@ class Actions {
   }
 
   static get(extnName) {
+    if(!extnName)
+      return store;
     for(const key in store)
       if (store[key].name === extnName) 
         return store[key]
