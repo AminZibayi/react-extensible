@@ -14,17 +14,17 @@ const Extension = props => (
           extnInfo = store[key];
       if (!extnInfo)
         return null
-      if (props.render && props.children)
-       throw new Error(`Both props.render and props.children are defined, you can only pass a React element to one of them`);
-      if (!(props.render || props.children))
+      if ((props.render && props.children) || (props.render && props.anyway) || (props.anyway && props.children))
+       throw new Error(`You can only pass a React element to one of props.render , props.anyway and props.children`);
+      if (!(props.render || props.children || props.anyway))
         if (!extnInfo.render)
-          throw new Error(`Neither props.render and props.children are defined, if you don't want to define them , you can also define 'render' field when registering an extension`);
-      if (extnInfo.disable) 
-        return null;
+          throw new Error(`none of props.render , props.children and props.anyway are defined, if you don't want to define them , you can also define 'render' field when registering an extension`);
+      if (extnInfo.disable && !props.anyway) 
+        return null;     
       if (typeof extnInfo.render === "function")
         if (extnInfo.render().then)
           extnInfo.render = lazy(extnInfo.render);
-      const Extn = (props.render || props.children || extnInfo.render);
+      const Extn = (props.render || props.children || props.anyway || extnInfo.render);
       const extnProps = (props.props || extnInfo.props);
       if (props.route)
         return <ErrorBoundary fallback={props.fallback}>
@@ -46,11 +46,9 @@ Extension.propTypes = {
   route: PropTypes.object,
   fallback: PropTypes.element, // fallback is rendered when an error happens it also receive the error
   props: PropTypes.object,
-  render: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.func,
-  ]),
-  children: PropTypes.element
+  render: PropTypes.func,
+  children: PropTypes.func,
+  anyway: PropTypes.func
 };
 
 export default Extension;

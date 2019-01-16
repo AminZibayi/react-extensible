@@ -72,6 +72,7 @@ A static class; It has five methods:
   render: Component/Function, // the extension will render this Component if none of props.render and props.children of the extension component whose props.name is equal to the name property of this object. also, it can be a loader function that will be passed to React.lazy.
   props: Object, // default {}, these props will be passed to the component that the extension component renders.
   suspense: Component, // if the value of render property is a loader function, this component will get rendered till the main component is loaded, in fact, this will be passed to React.Suspense.
+  //Note: you can have custom properties and methods
 }
 ```
 2. `unregister(extnName)`: unregisters an extension in other hand remove an extnInfo object.
