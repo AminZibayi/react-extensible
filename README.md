@@ -77,7 +77,7 @@ A static class; It has five methods:
 2. `unregister(extnName)`: unregisters an extension in other hand remove an extnInfo object.
 3. `disable(extnName)`: disables an extension so the extension will be unmounted.
 4. `enable(extnName)`: enables an extension so the extension will be mounted again.
-5. `get(extnName)`: returns an extnInfo object according to its name; if there is no matching extnInfo object, returns `undefined`.
+5. `get(extnName)`: returns an extnInfo object according to its name; if there is no matching extnInfo object, returns `undefined`. If you pass nothing (`undefined`), it will return the store (the extnInfo objects).
 
 ### Extension
 
