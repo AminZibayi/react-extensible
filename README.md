@@ -90,6 +90,7 @@ A react component; It represents an extension. `props`:
 4. `props`: an object, these props will be passed to the component that the extension renders.
 5. `render`: a react component, the extension will render this component.
 6. `children`: you can also pass the component that you want the extension to render via children.
+7. `anyway`: a react component, The extension will *always* render this component, even if the extension is disabled.
 
 **Note:** props of Extension component override the relevant extnInfo object.
 
