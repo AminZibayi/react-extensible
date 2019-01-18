@@ -1,6 +1,6 @@
 {
   "name": "react-extensible",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "A library which helps you create extensible react applications",
   "main": "index.js",
   "scripts": {},
