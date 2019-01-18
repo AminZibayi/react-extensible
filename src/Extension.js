@@ -39,8 +39,7 @@ Extension.propTypes = {
   fallback: PropTypes.func, // fallback is rendered when an error happens it also receives the error
   props: PropTypes.object,
   render: PropTypes.func,
-  children: PropTypes.func,
-  anyway: PropTypes.func
+  children: PropTypes.func
 };
 
 export default Extension;
