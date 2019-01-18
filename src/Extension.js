@@ -25,12 +25,6 @@ const Extension = props => (
           extnInfo.render = lazy(extnInfo.render);
       const Extn = (props.render || props.children || extnInfo.render);
       const extnProps = (props.props || extnInfo.props);
-      if (props.route)
-        return <ErrorBoundary fallback={props.fallback}>
-          <Suspense fallback={extnInfo.suspense || <div>Loading...</div>}>
-            <props.route path={"/" + extnInfo.name} render={props => <Extn {...extnProps}/>}/>
-          </Suspense>
-        </ErrorBoundary>;
       return <ErrorBoundary fallback={props.fallback}>
         <Suspense fallback={extnInfo.suspense || <div>Loading...</div>}>
           <Extn {...extnProps}/>
@@ -42,7 +36,6 @@ const Extension = props => (
 
 Extension.propTypes = {
   name: PropTypes.string.isRequired,
-  route: PropTypes.object,
   fallback: PropTypes.func, // fallback is rendered when an error happens it also receives the error
   props: PropTypes.object,
   render: PropTypes.func,
