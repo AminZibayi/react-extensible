@@ -24,7 +24,7 @@ const Extension = props => (
       const Extn = (props.render || props.children || extnInfo.render);
       const extnProps = (props.props || extnInfo.props);
       if (/(return|\=>)\s*\(*\s*import\s*\(+.*\)+/.test(Extn.toString()))
-          extnInfo.render = lazy(extnInfo.render);
+        Extn = lazy(Extn);
       return <ErrorBoundary fallback={props.fallback}>
         <Suspense fallback={extnInfo.suspense || <div>Loading...</div>}>
           <Extn {...extnProps}/>
