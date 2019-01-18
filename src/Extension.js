@@ -21,14 +21,10 @@ const Extension = props => (
           throw new Error(`Neither props.render nor props.children are defined, if you don't want to define them , you can also define 'render' field when registering an extension`);
       if (extnInfo.disable && !props.children) 
         return null;     
-      const Extn = (props.render || props.children || extnInfo.render);
+      let Extn = (props.render || props.children || extnInfo.render);
       const extnProps = (props.props || extnInfo.props);
-      if (/(return|\=>)\s*\(*\s*import\s*\(+.*\)+/.test(Extn.toString()))
-        Extn = React.lazy(Extn);
       return <ErrorBoundary fallback={props.fallback}>
-        <React.Suspense fallback={extnInfo.suspense || <div>Loading...</div>}>
           <Extn {...extnProps}/>
-        </React.Suspense>
       </ErrorBoundary>;
     }}
   </Context.Consumer>
