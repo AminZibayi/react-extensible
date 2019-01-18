@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Context from "./Context";
 
-const Extensions = props => (
+const Map = props => (
   <Context.Consumer>
     {store => {
       return store
@@ -14,8 +14,8 @@ const Extensions = props => (
   </Context.Consumer>
 );
 
-Extensions.propTypes = {
+Map.propTypes = {
   children: PropTypes.func
 };
 
-export default Extensions;
+export default Map;
