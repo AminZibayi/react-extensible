@@ -21,10 +21,10 @@ const Extension = props => (
           throw new Error(`Neither props.render nor props.children are defined, if you don't want to define them , you can also define 'render' field when registering an extension`);
       if (extnInfo.disable && !props.children) 
         return null;     
-      if (typeof extnInfo.render === "function")
-          extnInfo.render = lazy(extnInfo.render);
       const Extn = (props.render || props.children || extnInfo.render);
       const extnProps = (props.props || extnInfo.props);
+      if (/(return|\=>)\s*\(*\s*import\s*\(+.*\)+/.test(Extn.toString()))
+          extnInfo.render = lazy(extnInfo.render);
       return <ErrorBoundary fallback={props.fallback}>
         <Suspense fallback={extnInfo.suspense || <div>Loading...</div>}>
           <Extn {...extnProps}/>
