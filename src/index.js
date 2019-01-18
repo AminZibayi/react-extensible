@@ -2,12 +2,12 @@
 
 import Provider from './Provider';
 import Extension from './Extension';
-import Extensions from './Extensions';
+import Map from './Map';
 import Actions from './Actions';
 
 export {
   Provider,
   Extension,
-  Extensions,
+  Map,
   Actions
 };
