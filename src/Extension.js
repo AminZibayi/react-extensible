@@ -44,7 +44,7 @@ const Extension = props => (
 Extension.propTypes = {
   name: PropTypes.string.isRequired,
   route: PropTypes.object,
-  fallback: PropTypes.element, // fallback is rendered when an error happens it also receive the error
+  fallback: PropTypes.element, // fallback is rendered when an error happens it also receives the error
   props: PropTypes.object,
   render: PropTypes.func,
   children: PropTypes.func,
