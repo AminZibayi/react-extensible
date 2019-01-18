@@ -1,6 +1,6 @@
 /* In the Name of Allah */
 
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Context from "./Context";
 import ErrorBoundary from "./ErrorBoundary";
@@ -24,11 +24,11 @@ const Extension = props => (
       const Extn = (props.render || props.children || extnInfo.render);
       const extnProps = (props.props || extnInfo.props);
       if (/(return|\=>)\s*\(*\s*import\s*\(+.*\)+/.test(Extn.toString()))
-        Extn = lazy(Extn);
+        Extn = React.lazy(Extn);
       return <ErrorBoundary fallback={props.fallback}>
-        <Suspense fallback={extnInfo.suspense || <div>Loading...</div>}>
+        <React.Suspense fallback={extnInfo.suspense || <div>Loading...</div>}>
           <Extn {...extnProps}/>
-        </Suspense>
+        </React.Suspense>
       </ErrorBoundary>;
     }}
   </Context.Consumer>
