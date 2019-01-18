@@ -2,7 +2,20 @@
 
 # React-Extensible
 
-A library which helps you create extensible react applications.
+A library which helps you create extensible React applications.
+
+## Table of contents
+
+- [React-Extensible](#react-extensible)
+  - [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Basic Usage](#basic-usage)
+  - [API Reference](#api-reference)
+    - [Provider](#provider)
+    - [Actions](#actions)
+    - [Extension](#extension)
+    - [Map](#map)
+  - [License](#license)
 
 ## Installation
 
@@ -17,7 +30,7 @@ A library which helps you create extensible react applications.
 ## Basic Usage
 
 react-extensible exports:
-1. `Extension`: it is a react component that represents an extension or plugin. It receives a prop called `name`; You can have several `Extension`s with the same name. another prop is `render`, its value is a react component.
+1. `Extension`: it is a React component that represents an extension or plugin. It receives a prop called `name`; You can have several `Extension`s with the same name. another prop is `render`, its value is a React component/element.
 2. `Actions`: is a static class. You can register or unrgister an extension using `Actions.register(extnInfo)` and `Actions.unregister(extnName)`, `extnInfo` is an object and at least must have a `name` field.
 3. `Provider`: All the `Extension`s have to be descendants of a Provider component; Having only one Provider in your app is highly recommended.
 
@@ -28,9 +41,9 @@ import {Extension, Provider, Actions} from 'react-extensible';
 const App = props => (
   <Provider>
     <div className="App">
-      <Extension name="alpha" render={() => <div>Hello</div>}/>
+      <Extension name="alpha" render={<div>Hello</div>}/>
       <Extension name="beta" render={() => <div>Hello</div>}/>
-      <Extension name="beta" render={() => <div>Hello</div>}/>
+      <Extension name="beta" render={<div>Hello</div>}/>
     </div>
   </Provider>
 );
@@ -55,7 +68,7 @@ react-extensible has much more capabilities; See API Reference.
 
 ### Provider
 
-A react component; It has no props.
+A React component; It has no props.
 All the `Extension`s have to be descendants of a Provider component; Having only one Provider in your app is highly recommended.
 
 ### Actions
@@ -69,10 +82,8 @@ A static class; It has five methods:
 {
   name: String, // required, the name of the extension
   disable: Boolean, // default false, if true, the extension will get unmounted
-  render: Component/Function, // the extension will render this Component if none of props.render and props.children of the extension component whose props.name is equal to the name property of this object. also, it can be a loader function that will be passed to React.lazy.
+  render: Component/Element, // the extension will render this React component/element if none of props.render and props.children of the extension component whose props.name is equal to the name property of this object.
   props: Object, // default {}, these props will be passed to the component that the extension component renders.
-  suspense: Component, // if the value of render property is a loader function, this component will get rendered till the main component is loaded, in fact, this will be passed to React.Suspense.
-  //Note: you can have custom properties and methods
 }
 ```
 2. `unregister(extnName)`: unregisters an extension in other hand remove an extnInfo object.
@@ -82,58 +93,50 @@ A static class; It has five methods:
 
 ### Extension
 
-A react component; It represents an extension. `props`:
+A React component; It represents an extension. `props`:
 
 1. `name`: is required, it links an extension to a registered extnInfo object.
-2. `route`: if you are using react-router and want to pass the extension to a Route component, pass the Route component of react-router to the extension so the extension will pass its inside component as render property to a Route component; its path is the extension name.
-3. `fallback`: a component which will get rendered when the ErrorBoundary catches an error in its child component tree (the component that the extension renders); This fallback component receives a prop named `error` which contain the occurred error.
-4. `props`: an object, these props will be passed to the component that the extension renders.
-5. `render`: a react component, the extension will render this component.
-6. `children`: you can also pass the component that you want the extension to render via children.
-7. `anyway`: a react component, The extension will *always* render this component, even if the extension is disabled.
+2. `fallback`: a component which will get rendered when the ErrorBoundary catches an error in its child component tree (the component that the extension renders); This fallback component receives a prop named `error` which contains the occurred error.
+3. `props`: an object, these props will be passed to the component that the extension renders.
+4. `render`: a React component/element, the extension will render this component/element.
+5. `children`: a React component/element, The extension will *always* render this component/element, even if the extension is disabled.
 
 **Note:** props of Extension component override the relevant extnInfo object.
 
-### Extensions
+### Map
 
-A react component; It will call a function for each registered extnInfo object once it is rendered and anytime a change happens in the store (the extnInfo objects).
+A React component; It will call a function for each registered extnInfo object once it is rendered and anytime a change happens in the store (the extnInfo objects).
 
-The function is received through `children`. In fact, it will be passed to a map function so it receives each extnInfo object as the first argument. It can return nothing or an `Extension`: (the following example also uses lazy loading)
+The function is received through `children`. In fact, it will be passed to a map function so it receives each extnInfo object as the first argument. It can return nothing or an `Extension`:
 
 ```javascript
-// Beta.js
 import React from 'react';
-
-export default props => <div>I'll go soon...:(</div>;
-
-//App.js
-import React from 'react';
-import {Extension, Extensions, Provider, Actions} from 'react-extensible';
+import {Extension, Map, Provider, Actions} from 'react-extensible';
 
 const App = props => (
   <Provider>
     <div className="App">
-      <Extensions>
-        {extnInfo => <Extension name={extnInfo.name} render={extnInfo.name === "alpha" && (() => <div>Hello, I'm alpha</div>)}/>}
-      </Extensions>
-      <Extensions>
+      <Map>
+        {extnInfo => <Extension name={extnInfo.name} render={extnInfo.name === "alpha" && (<div>Hello, I'm alpha</div>)}/>}
+      </Map>
+      <Map>
         {extnInfo => {
           if(extnInfo.name === "alpha")
             return <Extension name="alpha"/>
           }}
-      </Extensions>
+      </Map>
     </div>
   </Provider>
 );
 
 Actions.register({
   name: "alpha",
-  render: () => <div>Hi, I am Alpha</div>
+  render: <div>Hi, I am Alpha</div>
 });
 
 Actions.register({
   name: "beta",
-  render: () => import("./Beta")
+  render: () => <div>I'll go soon...:(</div>
 });
 
 setTimeout(() => Actions.disable("beta"), 3000);
