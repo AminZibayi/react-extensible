@@ -21,10 +21,10 @@ const Extension = props => (
           throw new Error(`Neither props.render nor props.children are defined, if you don't want to define them , you can also define 'render' field when registering an extension`);
       if (extnInfo.disable && !props.children) 
         return null;     
-      let Extn = (props.render || props.children || extnInfo.render);
+      const Extn = (props.render || props.children || extnInfo.render);
       const extnProps = (props.props || extnInfo.props);
       return <ErrorBoundary fallback={props.fallback}>
-          <Extn {...extnProps}/>
+        {typeof Extn === "object" ? Extn : <Extn {...extnProps}/>}
       </ErrorBoundary>;
     }}
   </Context.Consumer>
@@ -34,8 +34,14 @@ Extension.propTypes = {
   name: PropTypes.string.isRequired,
   fallback: PropTypes.func, // fallback is rendered when an error happens it also receives the error
   props: PropTypes.object,
-  render: PropTypes.func,
-  children: PropTypes.func
+  render: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func,
+  ])
 };
 
 export default Extension;
