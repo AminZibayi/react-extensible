@@ -90,6 +90,7 @@ A static class; It has five methods:
 3. `disable(extnName)`: disables an extension so the extension will be unmounted.
 4. `enable(extnName)`: enables an extension so the extension will be mounted again.
 5. `get(extnName)`: returns an extnInfo object according to its name; if there is no matching extnInfo object, returns `undefined`. If you pass nothing (`undefined`), it will return the store (the extnInfo objects).
+6. `update(fn: (prevStore: any[]) => store)`: updates the store to the value that its callback returns.
 
 ### Extension
 
