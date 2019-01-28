@@ -3,7 +3,7 @@
 let store = [];
 
 document.addEventListener("extensible:mounted", e => {
-  document.dispatchEvent(new CustomEvent("extensible:init", {detail: store}));
+  document.dispatchEvent(new CustomEvent("extensible:update", {detail: store}));
 });
 
 class Actions {
@@ -12,7 +12,7 @@ class Actions {
     extnInfo.props || (extnInfo.props = {});
     store.forEach(obj => {
       if(obj.name === extnInfo.name)
-        throw new Error(`There already is a extn named "${extnInfo.name}"`);
+        throw new Error(`There already is an extension named "${extnInfo.name}"`);
     })
     document.dispatchEvent(new CustomEvent("extensible:register", {detail: extnInfo}));
     store.push(extnInfo)
@@ -49,6 +49,12 @@ class Actions {
     for(const key in store)
       if (store[key].name === extnName) 
         return store[key]
+  }
+
+  static update(fn) {
+    const result = fn(store);
+    store = result;
+    document.dispatchEvent(new CustomEvent("extensible:update", {detail: result}));
   }
 };
 

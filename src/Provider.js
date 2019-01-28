@@ -51,7 +51,7 @@ class Provider extends React.Component {
       }))
     });
 
-    document.addEventListener("extensible:init", e => {
+    document.addEventListener("extensible:update", e => {
       this.setState({ data: e.detail });
     });
   }
