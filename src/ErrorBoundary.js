@@ -14,20 +14,15 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.error) {
-      if(this.props.fallback)
-        return <this.props.fallback error={this.state.error}/>
-      return (
-        <h4>Something went wrong.</h4>
-      );
-    }
+    if (this.state.error)
+      return <this.props.fallback error={this.state.error}/>
 
     return this.props.children; 
   }
 }
 
 ErrorBoundary.propTypes = {
-  fallback: PropTypes.element
+  fallback: PropTypes.func
 };
 
 export default ErrorBoundary;
