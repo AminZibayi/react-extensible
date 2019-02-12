@@ -3,7 +3,9 @@
   "version": "1.1.0",
   "description": "A library which helps you create extensible react applications",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "rollup -c"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AminZibayi/react-extensible.git"
