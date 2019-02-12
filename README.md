@@ -11,10 +11,10 @@ A library which helps you create extensible React applications.
   - [Installation](#installation)
   - [Basic Usage](#basic-usage)
   - [API Reference](#api-reference)
-    - [Provider](#provider)
     - [Actions](#actions)
     - [Extension](#extension)
     - [Map](#map)
+  - [Examples](#examples)
   - [License](#license)
 
 ## Installation
@@ -32,20 +32,17 @@ A library which helps you create extensible React applications.
 react-extensible exports:
 1. `Extension`: it is a React component that represents an extension or plugin. It receives a prop called `name`; You can have several `Extension`s with the same name. another prop is `render`, its value is a React component/element.
 2. `Actions`: is a static class. You can register or unrgister an extension using `Actions.register(extnInfo)` and `Actions.unregister(extnName)`, `extnInfo` is an object and at least must have a `name` field.
-3. `Provider`: All the `Extension`s have to be descendants of a Provider component; Having only one Provider in your app is highly recommended.
 
 ```javascript
 import React from 'react';
-import {Extension, Provider, Actions} from 'react-extensible';
+import {Extension, Actions} from 'react-extensible';
 
 const App = props => (
-  <Provider>
-    <div className="App">
-      <Extension name="alpha" render={<div>Hello</div>}/>
-      <Extension name="beta" render={() => <div>Hello</div>}/>
-      <Extension name="beta" render={<div>Hello</div>}/>
-    </div>
-  </Provider>
+  <div className="App">
+    <Extension name="alpha" render={<div>Hello</div>}/>
+    <Extension name="beta" render={() => <div>Hello</div>}/>
+    <Extension name="beta" render={<div>Hello</div>}/>
+  </div>
 );
 
 Actions.register({
@@ -66,16 +63,11 @@ react-extensible has much more capabilities; See API Reference.
 
 ## API Reference
 
-### Provider
-
-A React component; It has no props.
-All the `Extension`s have to be descendants of a Provider component; Having only one Provider in your app is highly recommended.
-
 ### Actions
 
 A static class; It has five methods:
 
-1. `register(extnInfo: Object)`: registers an extension so can use the registered extension information to display extension in your app, you can even display an extension at several places in your app.
+1. `register(extnInfo: Object)`: registers an extension so you can use the information of the registered extension to display the extension in your app, you can even display an extension at several places in your app.
 
 `extnInfo`:
 ```javascript
@@ -97,12 +89,12 @@ A static class; It has five methods:
 A React component; It represents an extension. `props`:
 
 1. `name`: is required, it links an extension to a registered extnInfo object.
-2. `fallback`: a component which will get rendered when the ErrorBoundary catches an error in its child component tree (the component that the extension renders); This fallback component receives a prop named `error` which contains the occurred error.
+2. `fallback`: a component which will get rendered when the ErrorBoundary catches an error in its child component tree (the component that the extension renders); This fallback component receives a prop named `error` which consists the occurred error.
 3. `props`: an object, these props will be passed to the component that the extension renders.
 4. `render`: a React component/element, the extension will render this component/element.
 5. `children`: a React component/element, The extension will *always* render this component/element, even if the extension is disabled.
 
-**Note:** props of Extension component override the relevant extnInfo object.
+**Note:** the props of the Extension component will override the relevant extnInfo object.
 
 ### Map
 
@@ -112,22 +104,20 @@ The function is received through `children`. In fact, it will be passed to a map
 
 ```javascript
 import React from 'react';
-import {Extension, Map, Provider, Actions} from 'react-extensible';
+import {Extension, Map, Actions} from 'react-extensible';
 
 const App = props => (
-  <Provider>
-    <div className="App">
-      <Map>
-        {extnInfo => <Extension name={extnInfo.name} render={extnInfo.name === "alpha" && (<div>Hello, I'm alpha</div>)}/>}
-      </Map>
-      <Map>
-        {extnInfo => {
-          if(extnInfo.name === "alpha")
-            return <Extension name="alpha"/>
-          }}
-      </Map>
-    </div>
-  </Provider>
+  <div className="App">
+    <Map>
+      {extnInfo => <Extension name={extnInfo.name} render={extnInfo.name === "alpha" && (<div>Hello, I'm alpha</div>)}/>}
+    </Map>
+    <Map>
+      {extnInfo => {
+        if(extnInfo.name === "alpha")
+          return <Extension name="alpha"/>
+        }}
+    </Map>
+  </div>
 );
 
 Actions.register({
@@ -143,6 +133,40 @@ Actions.register({
 setTimeout(() => Actions.disable("beta"), 3000);
 
 export default App;
+```
+
+## Examples
+
+Several `ReactDOM.render`s
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Extension, Map, Actions} from 'react-extensible';
+
+Actions.register({
+  name: "alpha",
+  render: <div>Hi, I am Alpha</div>
+});
+
+ReactDOM.render(<Map>
+  {extnInfo => <Extension name={extnInfo.name} render={extnInfo.name === "alpha" && (<div>Hello, I'm alpha</div>)}/>}
+</Map>,
+document.getElementById('a'));
+
+ReactDOM.render(<Map>
+  {extnInfo => {
+    if(extnInfo.name === "alpha")
+      return <Extension name="alpha"/>
+    }}
+</Map>, document.getElementById('b'));
+
+Actions.register({
+  name: "beta",
+  render: () => <div>I'll go soon...:(</div>
+});
+
+setTimeout(() => Actions.disable("beta"), 3000);
 ```
 
 Is something missing?! feel free to open an issue!
